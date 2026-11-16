@@ -8,7 +8,6 @@ public static class BusinessRegistrations
 {
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
         
         services.AddScoped(typeof(IGenericService<,,>), typeof(GenericService<,,,>));
         

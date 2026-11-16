@@ -2,36 +2,37 @@ using AiTech.DataAccess.Repositories.GenericRepositories;
 using AiTech.DataAccess.UnitOfWorks;
 using AiTech.DTO.Common;
 using AiTech.Entity.Entities.Common;
-using AutoMapper;
+using Mapster;
+using MapsterMapper;
 
 namespace AiTech.Business.Services.GenericServices;
 
 public class GenericService<TEntity, TResultDto, TCreateDto, TUpdateDto>(
     IGenericRepository<TEntity> repository,
-    IUnitOfWork unitOfWork,
-    IMapper mapper)
-    : IGenericService<TResultDto, TCreateDto, TUpdateDto> where TEntity : BaseEntity where TUpdateDto : IBaseDto
+    IUnitOfWork unitOfWork)
+    : IGenericService<TResultDto, TCreateDto, TUpdateDto> 
+    where TEntity : BaseEntity 
+    where TUpdateDto : IBaseDto
 {
     protected readonly IGenericRepository<TEntity> Repository = repository;
     protected readonly IUnitOfWork UnitOfWork = unitOfWork;
-    protected readonly IMapper Mapper = mapper;
     
     
     public async Task<List<TResultDto>> GetAllAsync()
     {
         var entities = await Repository.GetAllAsync();
-        return Mapper.Map<List<TResultDto>>(entities);
+        return entities.Adapt<List<TResultDto>>();
     }
 
     public async Task<TResultDto> GetByIdAsync(int id)
     {
         var entity = await Repository.GetByIdAsync(id);
-        return Mapper.Map<TResultDto>(entity);
+        return entity.Adapt<TResultDto>();
     }
 
     public async Task CreateAsync(TCreateDto createDto)
     {
-        var entity = Mapper.Map<TEntity>(createDto);
+        var entity = createDto.Adapt<TEntity>();
         await Repository.CreateAsync(entity);
         await UnitOfWork.SaveAsync();
     }
@@ -39,7 +40,7 @@ public class GenericService<TEntity, TResultDto, TCreateDto, TUpdateDto>(
     public async Task UpdateAsync(TUpdateDto updateDto)
     {
         var entity = await Repository.GetByIdAsync(updateDto.Id);
-        Mapper.Map(updateDto, entity);
+        updateDto.Adapt(entity);
         Repository.Update(entity);
         await UnitOfWork.SaveAsync();
     }
