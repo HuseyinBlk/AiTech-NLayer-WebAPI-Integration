@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>AiTech.API</RootNamespace>
+        <UserSecretsId>bbefcf0a-22f7-43fe-b8d7-f00e3ba622e5</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

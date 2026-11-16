@@ -11,4 +11,12 @@
       <ProjectReference Include="..\AiTech.DTO\AiTech.DTO.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="14.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\CategoryServices\" />
+    </ItemGroup>
+
 </Project>

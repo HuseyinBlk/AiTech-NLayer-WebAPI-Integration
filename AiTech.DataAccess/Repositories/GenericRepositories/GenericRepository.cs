@@ -1,37 +1,41 @@
+using System.Linq.Expressions;
 using AiTech.DataAccess.Context;
 using AiTech.Entity.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace AiTech.DataAccess.Repositories.GenericRepositories;
 
-public class GenericRepository<TEntity>(AppDbContext context) : IRepositories<TEntity> where TEntity : BaseEntity
+public class GenericRepository<TEntity>(AppDbContext context) : IGenericRepository<TEntity> where TEntity : BaseEntity
 {
+    protected readonly AppDbContext Context = context;
+    protected readonly DbSet<TEntity> DbSet =  context.Set<TEntity>();
     public async Task<List<TEntity>> GetAllAsync()
     {
-        return await context.Set<TEntity>().AsNoTracking().ToListAsync();
+        return await DbSet.AsNoTracking().ToListAsync();
     }
 
-    public async Task<TEntity> GetByIdAsync(int id)
+    public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await context.Set<TEntity>().FindAsync(id);
+        return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
+    }
+    
+    public async Task<TEntity?> GetByIdAsync(int id)
+    {
+        return await DbSet.FindAsync(id);
     }
 
     public async Task CreateAsync(TEntity entity)
     {
-        await context.AddAsync(entity);
-        await context.SaveChangesAsync();
+        await DbSet.AddAsync(entity);
     }
 
-    public async Task UpdateAsync(TEntity entity)
+    public void Update(TEntity entity)
     {
-        context.Update(entity);
-        await context.SaveChangesAsync();
+        DbSet.Update(entity);
     }
 
-    public async Task DeleteAsync(int id)
+    public void Delete(TEntity entity)
     {
-        var entity = await GetByIdAsync(id);
-        context.Set<TEntity>().Remove(entity);
-        await context.SaveChangesAsync();
+        DbSet.Remove(entity);
     }
 }
