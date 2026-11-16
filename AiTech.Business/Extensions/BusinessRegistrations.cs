@@ -1,5 +1,7 @@
 using System.Reflection;
 using AiTech.Business.Services.GenericServices;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AiTech.Business.Extensions;
@@ -10,6 +12,9 @@ public static class BusinessRegistrations
     {
         
         services.AddScoped(typeof(IGenericService<,,>), typeof(GenericService<,,,>));
+        
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
         services.Scan(scan => scan
             .FromAssemblies(Assembly.GetExecutingAssembly())
