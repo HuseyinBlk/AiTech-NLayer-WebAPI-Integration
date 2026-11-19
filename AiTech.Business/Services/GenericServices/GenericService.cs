@@ -1,3 +1,4 @@
+using AiTech.Business.Exceptions;
 using AiTech.DataAccess.Repositories.GenericRepositories;
 using AiTech.DataAccess.UnitOfWorks;
 using AiTech.DTO.Common;
@@ -27,6 +28,10 @@ public class GenericService<TEntity, TResultDto, TCreateDto, TUpdateDto>(
     public async Task<TResultDto> GetByIdAsync(int id)
     {
         var entity = await Repository.GetByIdAsync(id);
+        if (entity == null)
+        {
+            throw new NotFoundException("İlgili kayıt bulunamadı.");
+        }
         return entity.Adapt<TResultDto>();
     }
 
@@ -40,6 +45,10 @@ public class GenericService<TEntity, TResultDto, TCreateDto, TUpdateDto>(
     public async Task UpdateAsync(TUpdateDto updateDto)
     {
         var entity = await Repository.GetByIdAsync(updateDto.Id);
+        if (entity == null)
+        {
+            throw new NotFoundException("Güncellenecek kayıt bulunamadı.");
+        }
         updateDto.Adapt(entity);
         Repository.Update(entity);
         await UnitOfWork.SaveAsync();
@@ -48,6 +57,10 @@ public class GenericService<TEntity, TResultDto, TCreateDto, TUpdateDto>(
     public async Task DeleteAsync(int id)
     {
         var entity = await Repository.GetByIdAsync(id);
+        if (entity == null)
+        {
+            throw new NotFoundException("Silinecek kayıt bulunamadı.");
+        }
         Repository.Delete(entity);
         await UnitOfWork.SaveAsync();
     }

@@ -10,4 +10,5 @@ public record ResultChooseDto(
     string Item2,
     string Item3,
     string ImageUrl,
-    DateTime CreatedDate) : IBaseDto;
+    DateTime CreatedDate,
+    DateTime? UpdatedDate) : IBaseDto;

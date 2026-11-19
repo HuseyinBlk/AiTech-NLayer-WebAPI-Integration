@@ -1,4 +1,5 @@
 using AiTech.DataAccess.Context;
+using AiTech.DataAccess.Interceptors;
 using AiTech.DataAccess.Repositories.GenericRepositories;
 using AiTech.DataAccess.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,12 @@ public static class DataAccessRegistrations
 {
     public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDbContext>(options =>
+        services.AddScoped<AuditDbContextInterceptor>();
+        
+        services.AddDbContext<AppDbContext>((sp,options) =>
         {
             options.UseSqlServer(configuration.GetConnectionString("SqlConnection"));
+            options.AddInterceptors(sp.GetRequiredService<AuditDbContextInterceptor>());
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

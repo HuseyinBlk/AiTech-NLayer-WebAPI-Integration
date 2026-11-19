@@ -8,4 +8,5 @@ public record ResultTestimonialDto(
     string Title,
     string Comment,
     string ImageUrl,
-    DateTime CreatedDate) : IBaseDto;
+    DateTime CreatedDate,
+    DateTime? UpdatedDate) : IBaseDto;

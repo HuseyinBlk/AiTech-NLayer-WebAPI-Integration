@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using AiTech.DataAccess.Extensions;
 using AiTech.Entity.Entities;
 using AiTech.Entity.Entities.Common;
 using Microsoft.EntityFrameworkCore;
@@ -6,23 +8,13 @@ namespace AiTech.DataAccess.Context;
 
 public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var entries = ChangeTracker.Entries<BaseEntity>();
-        foreach (var entry in entries)
-        {
-            if (entry.State == EntityState.Added)
-                entry.Entity.CreatedDate = DateTime.UtcNow;
-        
-            if (entry.State == EntityState.Modified)
-            {
-                entry.Entity.UpdatedDate = DateTime.UtcNow;
-                entry.Property(x => x.CreatedDate).IsModified = false; 
-            }
-        }
-        return base.SaveChangesAsync(cancellationToken);
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplySoftDeleteQueryFilter();
     }
-    
+
     public DbSet<About> Abouts { get; set; }
     public DbSet<AboutItem> AboutItems { get; set; }
     public DbSet<Banner> Banners  { get; set; }

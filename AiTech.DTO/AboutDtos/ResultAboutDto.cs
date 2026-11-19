@@ -9,4 +9,5 @@ public record ResultAboutDto(
     string ButtonText,
     string ButtonUrl,
     string ImageUrl,
-    DateTime CreatedDate) : IBaseDto;
+    DateTime CreatedDate,
+    DateTime? UpdatedDate) : IBaseDto;

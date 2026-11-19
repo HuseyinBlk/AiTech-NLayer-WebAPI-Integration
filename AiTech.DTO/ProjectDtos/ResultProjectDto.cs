@@ -9,4 +9,5 @@ public record ResultProjectDto(
     string ImageUrl,
     int CategoryId,
     ResultCategoryDto? Category,
-    DateTime CreatedDate) : IBaseDto;
+    DateTime CreatedDate,
+    DateTime? UpdatedDate) : IBaseDto;

@@ -10,9 +10,6 @@ public static class BusinessRegistrations
 {
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
-        
-        services.AddScoped(typeof(IGenericService<,,>), typeof(GenericService<,,,>));
-        
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         

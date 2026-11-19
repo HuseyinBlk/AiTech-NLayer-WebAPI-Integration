@@ -11,4 +11,5 @@ public record ResultBannerDto(
     string RButtonText,
     string RButtonUrl,
     string ImageUrl,
-    DateTime CreatedDate) : IBaseDto;
+    DateTime CreatedDate,
+    DateTime? UpdatedDate) : IBaseDto;
