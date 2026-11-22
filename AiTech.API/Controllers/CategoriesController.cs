@@ -28,14 +28,14 @@ namespace AiTech.API.Controllers
         public async Task<IActionResult> Create(CreateCategoryDto categoryDto)
         {
             await categoryService.CreateAsync(categoryDto);
-            return Ok("Kategori Oluşturuldu.");
+            return Created();
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateCategoryDto categoryDto)
         {
             await categoryService.UpdateAsync(categoryDto);
-            return Ok("Kategori başarıyla güncellendi.");
+            return NoContent();
 
         }
 
@@ -43,7 +43,7 @@ namespace AiTech.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await categoryService.DeleteAsync(id);
-            return Ok("Kategori silindi.");
+            return NoContent();
         }
         
     }

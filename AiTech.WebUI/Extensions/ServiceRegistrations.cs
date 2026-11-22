@@ -1,4 +1,5 @@
 using AiTech.WebUI.Services.CategoryServices;
+using AiTech.WebUI.Services.ProjectServices;
 
 namespace AiTech.WebUI.Extensions;
 
@@ -14,6 +15,7 @@ public static class ServiceRegistrations
         });
 
         services.AddHttpClient<ICategoryService, CategoryService>();
+        services.AddHttpClient<IProjectService, ProjectService>();
 
         return services;
     }

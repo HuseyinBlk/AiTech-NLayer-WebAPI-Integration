@@ -6,24 +6,25 @@ namespace AiTech.WebUI.Services.BaseServices;
 
 public class BaseApiService<TResultDto,TCreateDto,TUpdateDto>(HttpClient httpClient,string endpoint) : IBaseApiService<TResultDto,TCreateDto,TUpdateDto>
 {
+    protected readonly HttpClient HttpClient = httpClient;
     public async Task<List<TResultDto>> GetAllAsync()
     {
-        return await httpClient.GetFromJsonAsync<List<TResultDto>>(endpoint);
+        return await HttpClient.GetFromJsonAsync<List<TResultDto>>(endpoint);
     }
 
     public async Task<TResultDto?> GetByIdAsync(int id)
     {
-        return await httpClient.GetFromJsonAsync<TResultDto>($"{endpoint}/{id}");
+        return await HttpClient.GetFromJsonAsync<TResultDto>($"{endpoint}/{id}");
     }
 
     public async Task<TUpdateDto?> GetByIdForUpdateAsync(int id)
     {
-        return await httpClient.GetFromJsonAsync<TUpdateDto>($"{endpoint}/{id}");
+        return await HttpClient.GetFromJsonAsync<TUpdateDto>($"{endpoint}/{id}");
     }
 
     public async Task<ApiResult> CreateAsync(TCreateDto dto)
     {
-        var response = await httpClient.PostAsJsonAsync(endpoint, dto);
+        var response = await HttpClient.PostAsJsonAsync(endpoint, dto);
 
         if (response.IsSuccessStatusCode)
         {
@@ -41,7 +42,7 @@ public class BaseApiService<TResultDto,TCreateDto,TUpdateDto>(HttpClient httpCli
 
     public async Task<ApiResult> UpdateAsync(TUpdateDto dto)
     {
-        var response = await httpClient.PutAsJsonAsync(endpoint, dto);
+        var response = await HttpClient.PutAsJsonAsync(endpoint, dto);
 
         if (response.IsSuccessStatusCode)
         {
@@ -60,7 +61,7 @@ public class BaseApiService<TResultDto,TCreateDto,TUpdateDto>(HttpClient httpCli
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var response = await httpClient.DeleteAsync($"{endpoint}/{id}");
+        var response = await HttpClient.DeleteAsync($"{endpoint}/{id}");
         return response.IsSuccessStatusCode;
     }
 }

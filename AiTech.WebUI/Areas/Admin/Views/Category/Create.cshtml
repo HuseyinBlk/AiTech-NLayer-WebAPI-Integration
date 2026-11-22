@@ -1,0 +1,16 @@
+@model CreateCategoryDto
+
+@{
+    ViewBag.Title = "Create Category";
+    Layout = "_Layout";
+}
+
+<h3>Yeni Kategori Oluştur</h3>
+
+
+<form method="post">
+    <label>Kategori Adı</label>
+    <input asp-for="Title" class="form-control"/>
+    <br/>
+    <button class="btn btn-primary">Kaydet</button>
+</form>
