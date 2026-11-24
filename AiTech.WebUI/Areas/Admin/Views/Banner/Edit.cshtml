@@ -1,0 +1,67 @@
+@model UpdateBannerDto
+
+@{
+    ViewBag.Title = "Banner Güncelle";
+    Layout = "_Layout";
+}
+
+<div class="card shadow-sm col-md-8 mx-auto mt-4">
+    <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">Banner Düzenle</h5>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+            <!-- ID bilgisini gizli olarak taşıyoruz -->
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold">Banner Başlığı</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label fw-bold">Açıklama</label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageUrl" class="form-label fw-bold">Görsel URL / Yolu</label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LButtonText" class="form-label fw-bold">Sol Buton Metni</label>
+                    <input asp-for="LButtonText" class="form-control" />
+                    <span asp-validation-for="LButtonText" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LButtonUrl" class="form-label fw-bold">Sol Buton Linki</label>
+                    <input asp-for="LButtonUrl" class="form-control" />
+                    <span asp-validation-for="LButtonUrl" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="RButtonText" class="form-label fw-bold">Sağ Buton Metni</label>
+                    <input asp-for="RButtonText" class="form-control" />
+                    <span asp-validation-for="RButtonText" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="RButtonUrl" class="form-label fw-bold">Sağ Buton Linki</label>
+                    <input asp-for="RButtonUrl" class="form-control" />
+                    <span asp-validation-for="RButtonUrl" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+                <button type="submit" class="btn btn-warning">Güncelle</button>
+            </div>
+        </form>
+    </div>
+</div>

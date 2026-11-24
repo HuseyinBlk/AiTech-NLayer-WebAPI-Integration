@@ -11,5 +11,6 @@ public class Banner : BaseEntity
     public string RButtonText { get; set; }
     public string RButtonUrl { get; set; }
     public string ImageUrl { get; set; }
+    public bool IsActive { get; set; }
     
 }

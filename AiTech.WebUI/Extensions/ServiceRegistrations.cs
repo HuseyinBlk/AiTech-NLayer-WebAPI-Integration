@@ -1,4 +1,6 @@
+using AiTech.WebUI.Services.BannerServices;
 using AiTech.WebUI.Services.CategoryServices;
+using AiTech.WebUI.Services.GeminiServices;
 using AiTech.WebUI.Services.ProjectServices;
 
 namespace AiTech.WebUI.Extensions;
@@ -16,6 +18,8 @@ public static class ServiceRegistrations
 
         services.AddHttpClient<ICategoryService, CategoryService>();
         services.AddHttpClient<IProjectService, ProjectService>();
+        services.AddHttpClient<IBannerService, BannerService>();
+        services.AddHttpClient<IGeminiService, GeminiService>();
 
         return services;
     }

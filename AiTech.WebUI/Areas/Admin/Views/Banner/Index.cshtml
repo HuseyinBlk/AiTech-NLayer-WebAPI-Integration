@@ -1,0 +1,90 @@
+@model List<ResultBannerDto>
+
+@{
+    ViewBag.Title = "Banner Listesi";
+    Layout = "_Layout";
+    int count = 0;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Banner Yönetimi</h3>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Yeni Banner Ekle
+    </a>
+</div>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Görsel</th>
+            <th>Başlık</th>
+            <th>Açıklama</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>@count</th>
+                    <td>
+                        <img src="@item.ImageUrl" alt="@item.Title" style="width: 90px; height: 50px; object-fit: cover;" class="rounded border" />
+                    </td>
+                    <td class="fw-bold">@item.Title</td>
+                    <td>@(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)</td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <span class="badge bg-success">Aktif</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Pasif</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            @if (item.IsActive)
+                            {
+                                <form asp-action="MakeInactive" asp-route-id="@item.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm" title="Pasif Yap">
+                                        Pasif Yap
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="MakeActive" asp-route-id="@item.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-success btn-sm" title="Aktif Yap">
+                                        Aktif Yap
+                                    </button>
+                                </form>
+                            }
+
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-dark">
+                                Güncelle
+                            </a>
+
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Bu bannerı silmek istediğinize emin misiniz?');">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Sil
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center text-muted py-4">Kayıtlı banner bulunamadı.</td>
+            </tr>
+        }
+    </tbody>
+</table>
